@@ -7,16 +7,18 @@
 class CException: public std::exception
 {
 	private:
-		const char *message;
+        std::string message;
 
 	public:
 		explicit CException(const char* _msg) : message(_msg) {}
 
-		const char *to_string()
+		const char* what() const noexcept override
 		{
-			return message;
+			return message.c_str();
 		}
 };
+
+typedef std::pair<std::string, std::string> Query;
 
 std::string trim_input(const std::string& _string_to_trim)
 {
@@ -36,7 +38,7 @@ std::string trim_input(const std::string& _string_to_trim)
     return _string_to_trim.substr(start, length);
 }
 
-std::vector<std::string> split_string(const std::string& _string_to_split)
+std::vector<Query> split_string(const std::string& _string_to_split)
 {
     // Trim the string from whitespace characters
     const std::string& trimmed_string = trim_input(_string_to_split);
@@ -46,6 +48,7 @@ std::vector<std::string> split_string(const std::string& _string_to_split)
     size_t start = 0, end, delimiter_length = delimiter.length();
     std::string token;
     std::vector<std::string> tokens;
+    std::vector<Query> queries;
 
     // Split the string by the delimiter
     while ((end = trimmed_string.find(delimiter, start)) != std::string::npos) {
@@ -64,20 +67,44 @@ std::vector<std::string> split_string(const std::string& _string_to_split)
     token = trimmed_string.substr(start);
     tokens.push_back(token);
 
-    return tokens;
+    for (const std::string& _token : tokens) {
+        size_t pos = _token.find("=");
+
+        // If the token is empty throw an exception
+        if (pos == std::string::npos) {
+            throw CException("Invalid string!");
+        }
+
+        // Split the token by the "=" sign and get the key and the value
+        std::string key = _token.substr(0, pos);
+        std::string value = _token.substr(pos + 1);
+
+        // If the key or the value is empty throw an exception
+        if (key.empty() || value.empty()) {
+            throw CException("Invalid string!");
+        }
+
+        // Add the key-value pair to the vector
+        Query query(key, value);
+        queries.push_back(query);
+    }
+
+    return queries;
 }
 
 int main()
 {
 	try {
         const std::string& input = "a=1&b=2&c=3";
-        const std::vector<std::string>& tokens = split_string(input);
+        std::cout << "Input: " << input << std::endl;
 
-        for (const std::string& token : tokens) {
-            std::cout << token << std::endl;
+        const std::vector<Query>& tokens = split_string(input);
+
+        for (const auto& token : tokens) {
+            std::cout << "{" << token.first << ": " << token.second << "}" << std::endl;
         }
     } catch (CException& exc) {
-        std::cerr << exc.to_string() << std::endl;
+        std::cerr << exc.what() << std::endl;
 	}
 
 	return 0;

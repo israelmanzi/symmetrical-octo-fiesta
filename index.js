@@ -50,6 +50,6 @@ const parseQuery   = (_input) => {
         .filter(({ key, value }) => key && value);
 };
 
-const input = "";
+const input = "key1=value1&key2=value2&key3=value3";
 
 console.log(parseQuery(input));
