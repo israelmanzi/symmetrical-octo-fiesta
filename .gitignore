@@ -43,3 +43,58 @@ Makefile
 conanbuildinfo.txt
 conanbuildinfo.txt
 node_modules/
+
+# Byte-compiled / optimized files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+env/
+*.env
+
+# IDE-specific files (e.g., PyCharm, VSCode, etc.)
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw??
+*.swn
+*.swo
+*.pyc
+*.pyo
+__pycache__/
+*.gitignore
+*.idea/
+*.iml
+.idea_modules/
+*.log
+
+# Editor/OS files
+*~
+*.db
+.DS_Store
+
+# Compiled Python modules
+*.pyc
+
+# Python egg metadata
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebook specific files
+.ipynb_checkpoints/
+
+# Python virtual environment files
+# If you use pipenv, pipenv files are included here
+Pipfile
+Pipfile.lock
+
+# Logs and databases
+*.log
+*.sqlite3

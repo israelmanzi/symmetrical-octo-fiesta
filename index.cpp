@@ -1,5 +1,3 @@
-//  Query Parser (Imitation of js implementation in CPP; Location: ./index.js)
-
 #include<iostream>
 #include<string>
 #include<vector>
