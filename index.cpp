@@ -36,15 +36,46 @@ std::string trim_input(const std::string& _string_to_trim)
     return _string_to_trim.substr(start, length);
 }
 
+std::vector<std::string> split_string(const std::string& _string_to_split)
+{
+    // Trim the string from whitespace characters
+    const std::string& trimmed_string = trim_input(_string_to_split);
+    const std::string& delimiter = "&";
+
+    // If the string is empty return an empty vector
+    size_t start = 0, end, delimiter_length = delimiter.length();
+    std::string token;
+    std::vector<std::string> tokens;
+
+    // Split the string by the delimiter
+    while ((end = trimmed_string.find(delimiter, start)) != std::string::npos) {
+        token = trimmed_string.substr(start, end - start);
+
+        // If the token is empty throw an exception
+        if (token.empty()) {
+            throw CException("Invalid string!");
+        }
+
+        tokens.push_back(token);
+        start = end + delimiter_length;
+    }
+
+    // Add the last token
+    token = trimmed_string.substr(start);
+    tokens.push_back(token);
+
+    return tokens;
+}
+
 int main()
 {
 	try {
-        const std::string input = "    What a world this is!";
+        const std::string& input = "a=1&b=2&c=3";
+        const std::vector<std::string>& tokens = split_string(input);
 
-        std::string output = trim_input(input);
-
-        std::cout << "Original string: <" << input << ">" << std::endl;
-        std::cout << "Trimmed string: <" << output << ">" << std::endl;
+        for (const std::string& token : tokens) {
+            std::cout << token << std::endl;
+        }
     } catch (CException& exc) {
         std::cerr << exc.to_string() << std::endl;
 	}
