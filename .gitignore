@@ -1,0 +1,45 @@
+# Compiled object files
+*.o
+*.out
+*.obj
+
+# Compiled executables
+*.exe
+*.app
+
+# CMake build directory
+CMakeFiles/
+CMakeCache.txt
+CMakeScripts/
+Testing/
+
+# Visual Studio Code (VSCode) settings
+.vscode/
+
+# Xcode settings
+*.xcodeproj/
+*.xcworkspace/
+
+# Make build files
+Makefile
+
+# Compiled libraries
+*.a
+*.so
+
+# IDE-specific files
+.idea/
+.project
+*.suo
+*.user
+*.sln
+*.suo
+*.userprefs
+
+# Text editor-specific files
+*~
+
+# Dependency directories (e.g., for dependencies managed with Conan or vcpkg)
+conanbuildinfo.txt
+conanbuildinfo.txt
+node_modules/
